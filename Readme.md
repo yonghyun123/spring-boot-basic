@@ -198,3 +198,6 @@ MemberServiceImpl '생성자 주입'
 > - 배역,배우를 생각해보면 AppConfig는 기획자
 > - AppConfig는 구체 클래스를 선택한다.
 > - 배역에 맞는 배우를 선택하게 함
+
+
+
