@@ -170,3 +170,31 @@ public class OrderServiceImpl implements OrderService {
 
 - 이 문제를 해결하려면 누군가가 클라이언트인 OrderServiceImpl에 DiscountPolisy의 구현객체를 대신 생성 및 주입해주어야 한다.
 
+### AppConfig 등장
+
+- 애플리케이션의 전체 동작 방식을 구성하기위해, '구현 객체를 생성'하고 '연결'하는 책임을 가지는 별도의 설정 클래스를 만들자
+
+- AppConfig는 애플리케이션의 실제 동작에 필요한 '구현 객체를 생성'한다.
+- AppConfig는 생성한 객체 인스턴스의 참조를 '생성자를 통해서 주입(연결)'해준다.
+  - MemberServiceImpl -> MemoryMemeberRepository
+  - OrderServiceImpl ->MemoryMemeberRepository, FixDiscountPolicy
+
+
+
+MemberServiceImpl '생성자 주입'
+
+- MemberServiceImpl은 MemoryMemberRepository를 의존하지 않음
+- 단지 MemberRepository인터페이스만 의존
+- MemberServiceImpl은 생성자를 통해서 어떤 구현객체를 주입할지는 오직 외부에서만 결정(AppConfig)
+
+### 관심사의 분리
+
+- 객체를 생성하고 연결하는 역할과 실행하는 역할이 명확히 분리되었다.
+- 클라이언트인 MemberServiceImpl 입장에서 보면 의존관계를 마치 외부에서 주입해준것 같다고 해서 'DI(Dependency Injection) 의존관계 주입'이라고 한다.
+
+> 정리
+>
+> - AppConfig를 통해서 관심사를 분리
+> - 배역,배우를 생각해보면 AppConfig는 기획자
+> - AppConfig는 구체 클래스를 선택한다.
+> - 배역에 맞는 배우를 선택하게 함
