@@ -143,5 +143,30 @@
 
 동시성의 문제로 ConcurrentHashMap사용 필요(찾아보기)
 
+### 새로운 할인 정책 적용과 문제점
 
+할인 정책을 변경하려면 클라이언트인 orderServiceImpl코드를 수정해야함
+
+```java
+public class OrderServiceImpl implements OrderService {
+    private final MemberRepository memberRepository= new MemoryMemberRepository();
+//    private final DiscountPolicy discountPolicy = new FixDisoucntPolicy();
+    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+}
+```
+
+'문제점 발견'
+
+- 역할과 구현을 충실하게 분리 -> ok
+- 다형성도 활용하고, 인터페이스와 구현 객체를 분리 -> ok
+- OCP, DIP 같은 객체지향 설계 원칙을 충실히 준수
+  - 그렇게 보이지만 사실은 아니다
+- DIP:주문서비스 클라이언트는 DiscountPolicy인터페이스에 의존하면서 DIPf를 지킨 것 같은데?
+  - 클래스 의존관계 분석을 하면 인터페이스 뿐만 아니라 구현클래스에도 의존
+- OCP: 변경하지 않고 확장할 수 있다고 했는데?
+  - 현재는 클라이언트 코드에 영향을 준다 -> OCP위반
+
+'해결방안'
+
+- 이 문제를 해결하려면 누군가가 클라이언트인 OrderServiceImpl에 DiscountPolisy의 구현객체를 대신 생성 및 주입해주어야 한다.
 
