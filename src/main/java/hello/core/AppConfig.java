@@ -1,10 +1,9 @@
 package hello.core;
 
 import hello.core.discount.DiscountPolicy;
-import hello.core.discount.FixDisoucntPolicy;
 import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.MemberRepository;
-import hello.core.member.MemberServciceImpl;
+import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemberService;
 import hello.core.member.MemoryMemberRepository;
 import hello.core.order.OrderService;
@@ -17,7 +16,7 @@ public class AppConfig {
 
     @Bean
     public MemberService memberService() {
-        return new MemberServciceImpl(memberRepository());
+        return new MemberServiceImpl(memberRepository());
     }
 
     @Bean
