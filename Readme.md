@@ -265,7 +265,39 @@ MemberServiceImpl '생성자 주입'
 
 - 스프링 컨테이너를 사용하면 어떤 장점이 있을까? -> 이걸 배우는과정
 
+# 스프링 컨테이너와 스프링 빈
 
+```java
+ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class)
+```
+
+> 참고: 정확히는 스프링 컨테이너를 부를때 BeanFactory, AppicationContext로 구분해서 이야기한다. BeanFactory를 직접사용하는 경우는 거의 없으므로 일반적으로 ApplicationContext를 스프링컨테이너라 한다.
+
+
+
+![스크린샷 2021-08-29 오후 3.35.15](/Users/yonghyun/Documents/스크린샷 2021-08-29 오후 3.35.15.png)
+
+빈이름: memberService 빈 객체: MemberServiceImpl
+
+빈이름: orderService.      빈 객체: OrderServiceImpl 
+
+등등..
+
+> ''빈 이름은 항상 다른 이름을 부여''해야함 다른빈이 무시되거나 기존 빈이 덮어버리는 오류가 생김
+
+
+
+- 스프링 빈 의존관계 설정
+
+memberService 는 memberRepository를 의존
+
+orderService는 memberRepository와 discountPolicy를 의존
+
+-> 스프링은 빈을 생성하고, 의존관계를 주입하는 단계가 나누어져 있다.
+
+
+
+### 컨테이너에 등록된 모든 빈 조회
 
 
 
