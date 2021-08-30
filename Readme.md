@@ -301,5 +301,11 @@ orderService는 memberRepository와 discountPolicy를 의존
 
 
 
+### 스프링 빈 조회 - 상속관계
+
+- 부모 타입으로 조회하몀ㄴ, 자식 타입도 함께 조회된다.
+- 모든 자바의 객체는 최고 부모인 'object' 타입으로 조회하면, 모든 스프링 빈을 조회한다.
+- 
+
 
 

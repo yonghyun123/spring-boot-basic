@@ -45,7 +45,7 @@ public class ApplicationContextSameBeanFindTest {
         }
 
         org.assertj.core.api.Assertions.assertThat(beansOfType.size()).isEqualTo(2);
-        
+
     }
 
     @Configuration
