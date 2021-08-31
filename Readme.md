@@ -305,7 +305,36 @@ orderService는 memberRepository와 discountPolicy를 의존
 
 - 부모 타입으로 조회하몀ㄴ, 자식 타입도 함께 조회된다.
 - 모든 자바의 객체는 최고 부모인 'object' 타입으로 조회하면, 모든 스프링 빈을 조회한다.
+
+
+
+### BeanFactory와 ApplicationContext
+
+
+
+![beanFactory](/Users/yonghyun/Documents/core/src/main/resources/image/beanFactory.png)
+
+'Beanfactory'
+
+- 스프링 컨테이너의 최상위 인터페이스이다
+- 스프링 빈을 관리하고 조회하는 역할을 담당한다.
+- 대부분의 기능이 BeanFactory가 제공하는 기능이다.
+
+
+
+'ApplicationContext'
+
+- BeanFactory 기능을 모두 상속받아서 제공
+- 애플리케이션을 개발할 때는 빈을 관리하고 조회하는 기능뿐만 아니라 수 많은 부가기능이 필요하다.
+
+
+
+- 메시지소스를 활용한 국제화기능
+  - 한국에서 들어오면 한국어로, 영어권에서 들어오면 영어로 출력
+- 환경변수
+  - 로컬,개발,운영을 구분해서 처리
+- 어플리케이션 이벤트
+  - 이벤트를 발생하고 구독하는 모델을 편리하게 지원
+- 편리한 리소스 조회
+  - 파일,클래스패스,외부 등에서 리소스를 편리하게 조회
 - 
-
-
-
