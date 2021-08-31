@@ -353,7 +353,7 @@ orderService는 memberRepository와 discountPolicy를 의존
 
 
 
-<img width="355" alt="스크린샷 2021-09-01 오전 12 20 07" src="https://user-images.githubusercontent.com/15208005/131534532-9de0e9fd-c14f-49ef-9c73-9aa9c572796b.png">
+!!![스크린샷 2021-09-01 오전 12.20.07](/Users/yonghyun/Desktop/스크린샷 2021-09-01 오전 12.20.07.png)
 
 - AnnotationConfigApplicationContext는 AnnotatedBeanDefinitionReader를 이용해서 AppConfig.class를 읽고 BeanDefinition을 생성한다.
 
@@ -375,5 +375,5 @@ orderService는 memberRepository와 discountPolicy를 의존
 
 - BeanDefinition은 스프링이 다양한 형태의 설정 정보를 BeanDefinition으로 추상화해서 사용하는 것이다.
 
-### BeanDefition이 java Config파일을 읽어드릴때, factoryMethod방법을 이용한다.
+### BeanDefition이 java Config파일을 읽어드릴때, factoryMethod방법을 이용한다..
 
