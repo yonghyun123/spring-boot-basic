@@ -353,7 +353,7 @@ orderService는 memberRepository와 discountPolicy를 의존
 
 
 
-!!![스크린샷 2021-09-01 오전 12.20.07](/Users/yonghyun/Desktop/스크린샷 2021-09-01 오전 12.20.07.png)
+<img width="355" alt="스크린샷 2021-09-01 오전 12 20 07" src="https://user-images.githubusercontent.com/15208005/131534532-9de0e9fd-c14f-49ef-9c73-9aa9c572796b.png">
 
 - AnnotationConfigApplicationContext는 AnnotatedBeanDefinitionReader를 이용해서 AppConfig.class를 읽고 BeanDefinition을 생성한다.
 
