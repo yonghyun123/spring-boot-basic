@@ -337,3 +337,43 @@ orderService는 memberRepository와 discountPolicy를 의존
   - 이벤트를 발생하고 구독하는 모델을 편리하게 지원
 - 편리한 리소스 조회
   - 파일,클래스패스,외부 등에서 리소스를 편리하게 조회
+
+
+
+### 스프링 빈 설정 메타 정보 - BeanDefinition
+
+- 스프링은 어떻게 이런 다양한 설정 형식을 지원하는것일까?
+- 그중심에는 BeanDefinition이라는 추상화가 있다.
+- 쉽게이야기해서 '역할과 구현을 개념적으로 나눈것'
+  - xml을 읽어서 beanDefinition을 만든다.
+  - 자바코드를 읽어서 beanDefinition을 만든다.
+  - 스프링컨테이너는 자바인지, xml인지 몰라도 BeanDefinition만 알면 된다.
+- BeanDefinition을 빈 설정 메타정보라 한다.
+- 스프링 컨테이너는 이 메타정보를 기반으로 스프링 빈을 생성한다.
+
+
+
+!!![스크린샷 2021-09-01 오전 12.20.07](/Users/yonghyun/Desktop/스크린샷 2021-09-01 오전 12.20.07.png)
+
+- AnnotationConfigApplicationContext는 AnnotatedBeanDefinitionReader를 이용해서 AppConfig.class를 읽고 BeanDefinition을 생성한다.
+
+- GenericXmlApplicationContext는 XmlBeanDefinitionReaderf를 이용해서 appConfig.xml을 읽고 BeanDefinition을 생성한다.
+
+- BeanDefinition 살펴보기
+
+  > BeanClassName:생성할 빈의 클래스 명
+  >
+  > factoryBeanName: 팩토리 역할의 빈을 사용할 경우 이름
+  >
+  > factoryMethodName: 빈을 생성할 팩토리 메서드 지정 (memberService)
+  >
+  > Scope: 싱글톤
+  >
+  > lazyInit: 스프링 컨테이너를 생성할 때 빈을 생성하는 것이 아니라 실제 빈을 사용할 때 까지 최대한 생성을 지연처리 하는지 여부
+
+'정리'
+
+- BeanDefinition은 스프링이 다양한 형태의 설정 정보를 BeanDefinition으로 추상화해서 사용하는 것이다.
+
+### BeanDefition이 java Config파일을 읽어드릴때, factoryMethod방법을 이용한다.
+
