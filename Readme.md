@@ -312,7 +312,7 @@ orderService는 memberRepository와 discountPolicy를 의존
 
 
 
-![beanFactory](/Users/yonghyun/Documents/core/src/main/resources/image/beanFactory.png)
+<img width="349" alt="beanFactory" src="https://user-images.githubusercontent.com/15208005/131524252-91e7ca54-a4e0-43f6-90e1-c8e0f1d68152.png">
 
 'Beanfactory'
 
