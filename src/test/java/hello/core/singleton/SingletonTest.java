@@ -10,7 +10,7 @@ public class SingletonTest {
 
     @Test
     @DisplayName("스프링없는 DI컨테이너")
-    void pureContainer(){
+    void pureContainer() {
         AppConfig appConfig = new AppConfig();
         MemberService memberService = appConfig.memberService();
         MemberService memberService2 = appConfig.memberService();
@@ -20,5 +20,19 @@ public class SingletonTest {
         //memberService != memberService2
         Assertions.assertThat(memberService).isNotEqualTo(memberService2);
 
+    }
+
+    @Test
+    @DisplayName("싱글톤 패턴을 사용한 객체 사용")
+    void singletonServiceTest(){
+        SingletonService singletonService = SingletonService.getInstance();
+        SingletonService singletonService2 = SingletonService.getInstance();
+
+        System.out.println("singletonService = " + singletonService);
+        System.out.println("singletonService2 = " + singletonService2);
+
+        Assertions.assertThat(singletonService).isSameAs(singletonService2);
+        //same == 인스턴스 참조값 비교
+        //equal 값비교
     }
 }

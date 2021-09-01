@@ -397,5 +397,56 @@ orderService는 memberRepository와 discountPolicy를 의존
 
 
 
+### 싱글톤 패턴
+
+- 클래스의 인스턴스가 딱 1개만 생성되는 것을 보장하는 디자인 패턴
+- 그래서 객체 인스턴스를 2개 이상 생성하지 못하도록 막아야 한다.
+  - Private 생성자를 생성해서 외부에서 임의로 new 키워드를 막는다.
+
+
+
+```java
+public class SingletonService {
+
+    //static 선언은 클래스 레벨로 올라가기 때문에 하나만 생성됨
+    private static final SingletonService instance = new SingletonService();
+
+    //private 생성자
+    private SingletonService(){
+
+    }
+
+    private static SingletonService getInstance(){
+        return instance;
+    }
+    
+}
+```
+
+- Static 영역에 객체 instance를 하나 미리 생성해서 올려둔다.
+- 객체 인스턴스가 필요하면 getInstance()메서드를 통해서만 조회할 수 있다. 이 메서드를 호출하면 항상 같은 인스턴스를 반환
+- Private 생성자로 new 키워드로 객체 인스턴스 생성을 막는다.
+
+- 호출할 때 마다 같은 객체 인스턴스를 반환하는 것을 확인가능함.
+- 위의 방법은 객체를 미리 생성해두는 가장 단순하고 안전한 방법을 선택한다.
+
+- 싱글톤 패턴을 적용하면 고객의 요청이 올 때 마다 이미 만들어진 객체를 반환
+
+> 싱글톤 패턴 문제점
+>
+> - 패턴을 구현하는 코드가 많이 들어감
+>
+> - 테스트가 어렵다.
+>
+> - 내부 속성을 변경하거나 초기화 하기 어렵다.
+>
+> - private 생성자로 자식 클래스를 만들기 어렵다.
+>
+> - 유연성이 떨어진다.
+>
+> - 안티패턴으로 불리기도 한다.
+>
+>   
+
 
 
