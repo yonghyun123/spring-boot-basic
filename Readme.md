@@ -448,5 +448,19 @@ public class SingletonService {
 >
 >   
 
+<img width="608" alt="singletonContainer" src="https://user-images.githubusercontent.com/15208005/131948997-4d672959-afdc-4668-af20-7977296f85ea.png">
 
+
+
+스프링 컨테이너는  빈 이름으로 빈 객체를 관리한다.
+
+스프링컨테이너의 기능 덕분에 싱글톤 패턴의 단점을 해결하면서 객체를 싱글톤으로 유지할 수 있다. 
+
+- 싱글톤 패턴을 위한 불필요한 코드가 들어가지 않는다.
+- DIP,OCP,테스트로부터 자유로울 수 있다.
+
+싱글톤을 사용하지 않는 케이스
+
+- http 세션에 라이프사이클에 맞춘 객체를 생성해야하는 경우
+- 그 외의 대부분은 99% 싱글톤 방식의 객체생성을 선택한다.
 

@@ -5,6 +5,8 @@ import hello.core.member.MemberService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class SingletonTest {
 
@@ -24,7 +26,7 @@ public class SingletonTest {
 
     @Test
     @DisplayName("싱글톤 패턴을 사용한 객체 사용")
-    void singletonServiceTest(){
+    void singletonServiceTest() {
         SingletonService singletonService = SingletonService.getInstance();
         SingletonService singletonService2 = SingletonService.getInstance();
 
@@ -32,6 +34,21 @@ public class SingletonTest {
         System.out.println("singletonService2 = " + singletonService2);
 
         Assertions.assertThat(singletonService).isSameAs(singletonService2);
+        //same == 인스턴스 참조값 비교
+        //equal 값비교
+    }
+
+    @Test
+    @DisplayName("스프링컨테이너와 싱글톤")
+    void springContainer(){
+
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        MemberService memberService = ac.getBean("memberService", MemberService.class);
+        MemberService memberService1 = ac.getBean("memberService", MemberService.class);
+        Assertions.assertThat(memberService).isSameAs(memberService1);
+
+
+
         //same == 인스턴스 참조값 비교
         //equal 값비교
     }
