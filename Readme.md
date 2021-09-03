@@ -516,12 +516,47 @@ public class StatefulService {
 
 
 - 실제로 쓰레드를 사용하진 않았다.
-
 - ThreadA가 사용자 A코드를 호출하고, ThreadB가 사용자 코드 B를 호출한다 가정
-
 - StatefulService의 price필든느 공유되는 필드인데, 특정 클라이언트가 값을 변경
-
 - 사용자A의 주문금액은 10000원인데, 20000원의 결과가 나왔다.
 
-  
+
+
+### @Configuration과 싱글톤
+
+```java
+
+@Configuration
+public class AppConfig {
+
+    // @Bean인데 memberService -> new MemoryMemeberRepository 호출하게 됨
+    // @Bean orderService -> new MemoryMemeberRepository 호출하게 됨
+
+    @Bean
+    public MemberService memberService() {
+        return new MemberServiceImpl(memberRepository());
+    }
+
+    @Bean
+    public OrderService orderService(){
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
+    }
+
+    @Bean
+    public MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+
+    @Bean
+    public DiscountPolicy discountPolicy(){
+        return new RateDiscountPolicy();
+    }
+}
+
+```
+
+
+
+- 위의 소스를 보면 MemoryMemberRepository가 두번 생성되면서 싱글톤이 깨진것 처럼 보이게 된다.
+-  
 
