@@ -464,3 +464,64 @@ public class SingletonService {
 - http 세션에 라이프사이클에 맞춘 객체를 생성해야하는 경우
 - 그 외의 대부분은 99% 싱글톤 방식의 객체생성을 선택한다.
 
+
+
+## 싱글톤 방식의 주의점
+
+- 싱글톤 패턴이든, 싱글톤 컨테이너를 사용하던, 인스턴스를 하나만생성해서 공유하기 때문에, 상태를 유지(stateful)하게 설계하면 안된다.
+  - 특정 클라이언트에 의존적인 필드가 있으면 안된다.
+  - 특정 클라이언트가 값을 변경할 수 있는 필드가 있으면 안된다.
+  - 자바에서 공유되지 않는, 지역변수 파라미터, ThreadLocal등을 사용해야한다.
+
+
+
+```java
+public class StatefulService {
+
+    private int price; //상태를 유지하는 필드
+
+    public void order(String name, int price){
+        System.out.println("name = " + name + " price = " + price);
+        this.price = price;
+    }
+
+    public int getPrice(){
+        return price;
+    }
+}
+```
+
+
+
+```java
+ @Test
+    @DisplayName("싱글톤 문제점")
+    void statefulServiceSingleton(){
+       ApplicationContext ac = new AnnotationConfigApplicationContext(TestConfig.class);
+        StatefulService bean = ac.getBean(StatefulService.class);
+        StatefulService bean2 = ac.getBean(StatefulService.class);
+
+        //Thread A사용자가 10000원 주문
+        bean.order("userA", 10000);
+
+        //Thread B사용자가 20000원 주문
+        bean2.order("userB", 20000);
+
+        //Thread A가 주문금액을 조회
+        int price = bean.getPrice();
+        System.out.println("price = " + price);
+    }
+```
+
+
+
+- 실제로 쓰레드를 사용하진 않았다.
+
+- ThreadA가 사용자 A코드를 호출하고, ThreadB가 사용자 코드 B를 호출한다 가정
+
+- StatefulService의 price필든느 공유되는 필드인데, 특정 클라이언트가 값을 변경
+
+- 사용자A의 주문금액은 10000원인데, 20000원의 결과가 나왔다.
+
+  
+
