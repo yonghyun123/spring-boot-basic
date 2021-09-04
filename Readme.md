@@ -558,5 +558,41 @@ public class AppConfig {
 
 
 - 위의 소스를 보면 MemoryMemberRepository가 두번 생성되면서 싱글톤이 깨진것 처럼 보이게 된다.
--  
+
+
+
+순수한 클래스라면 
+
+ class hello.core.AppConfig라고 출력이 되어야한다.
+
+AppConfig를 상속한 AppConfig@CGLIB라는 객체가 등록된다.
+
+스프링 컨터이너가 바이트코드 조작 라이브러리를 사용해서 이 클래스를 스프링빈으로 등록한 것.
+
+### AppConfig@CGLIB 예상코드
+
+```java
+@Bean
+public MemberRepository memberRepository(){
+  if(memoryMemberRepository가 이미 스프링 컨테이너에 등록되어 있으면?){
+    return 스프링 컨테이너에서 찾아서 반환
+  } else {
+    기존 로직을 호출해서 MemoryMemeberRepository를 생성하고 스프링 컨테이너에 등록 
+     return 반환
+  }
+}
+```
+
+- @Bean이 붙은 메서드마다 이미 스프링 빈이 존재하면 존재하는 빈을 반환하고, 없으면 생성해서 스프링 빈으로 등록하고 반환하는 코드가 동적으로 만들어진다.
+- 이런 구조를 통해 싱글톤이 보장된다.
+
+
+
+@Configuration을 적용하지않고, @Bean만 적용하면 어떻게 될까?
+
+- 싱글톤 구조가 이뤄지지 않는다.
+- AppConfigCGLIB@이 만들어지지 않음
+- 
+
+
 
