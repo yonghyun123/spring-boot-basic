@@ -640,5 +640,35 @@ public class AutoAppConfig {
 
 
 
+### 탐색 위치와 기본 스캔 대상
+
+- basePackages: 탐색할 컴포넌트스캔 대상의 시작위치 이 패키지를 포함해서 하위 패키지를 모두 탐색한다.
+- basePackageClasses:  지정한 클래스의 패키지를 탐색 위치로 지정
+- 지정하지 않으면: @ComponentScan이 붙은 설정 정보 클래스의 패키지가 시작위치가 된다.
+
+
+
+예를들어
+
+- com.hello
+- com.hello.service
+- com.hello.repository
+
+
+
+com.hello -> 프로젝트의 시작 루트, 여기에 AppConfig같은 메인정보를 두고 @ComponentScan애노테이션을 붙이고 basePackages는 생략
+
+
+
+### 컴포넌트 스캔 기본 대상
+
+- @Component
+- @Controller
+- @Service
+- @Repository
+- @Configuration
+
+> 참고: 사실 애노테이션에는 상속관계가 없다. 이렇게 애노테이션이 특정 애노테이션을 들고 있는것을 인식할 수 있는것은 자바가 지원하는게 아니라, 스프링이 지원하는 기능이다.
+
 
 
