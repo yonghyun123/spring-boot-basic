@@ -670,5 +670,17 @@ com.hello -> 프로젝트의 시작 루트, 여기에 AppConfig같은 메인정�
 
 > 참고: 사실 애노테이션에는 상속관계가 없다. 이렇게 애노테이션이 특정 애노테이션을 들고 있는것을 인식할 수 있는것은 자바가 지원하는게 아니라, 스프링이 지원하는 기능이다.
 
+ 
+
+```java
+ @ComponentScan(
+            includeFilters = @Filter(type = FilterType.ANNOTATION, classes = MyIncludeComponent.class),
+            excludeFilters = @Filter(type = FilterType.ANNOTATION, classes = MyExcludeComponent.class)
+    )
+```
+
+- includeFilters에 MyIncludeComponent를 추가해서 BeanA가 스프링 빈에 등록된다.
+- excludeFilters에 MyExcludeComponent를 추가해서 BeanB는 스프링 빈에 등록되지 않는다.
+
 
 
