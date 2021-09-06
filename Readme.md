@@ -592,7 +592,53 @@ public MemberRepository memberRepository(){
 
 - 싱글톤 구조가 이뤄지지 않는다.
 - AppConfigCGLIB@이 만들어지지 않음
-- 
+
+
+
+# 컴포넌트 스캔
+
+
+
+### 컴포넌트 스캔과 의존관계 자동 주입
+
+- 지금까지 스프링 빈을 등록할 때는 자바 코드의 @Bean이나 XML의 <bean> 등을 통해서 설정 정보에 직접 등록할 스프링 빈을 나열
+- 예제에는 몇개 안했지만, 이렇게 등록해야할 빈들이 많아지면 설정정보가 커지고, 누락하는 문제 발생
+- 스프링은 설정 정보가 없어도 자동으로 스프링 빈을 등록하는 컴포넌트 스캔이라는 기능 제공
+- 또 의존관계 주입하는 @Autowired 기능 제공
+
+
+
+```java
+@Configuration
+@ComponentScan(
+        excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Configuration.class)
+        
+
+)
+public class AutoAppConfig {
+
+}
+```
+
+- 컴포넌트 스캔을 사용하려면 먼저 @ComponentScan을 설정에 추가
+- 기존의 AppConfig와는 다르게 @Bean으로 등록한 클래스가 없음
+
+> 컴포넌트 스캔은 이름 그대로 @Component 어노테이션이 붙은 클래스를 스캔해서 스프링 빈으로 등록한다.
+>
+> 참고: @Component를 등록하게 되면 스프링 빈을 등록하게 되지만 의존관계를 연결할 수 있는 방법이 없음. 그렇기 때문에 생성자에 @Autowired 가 필요하게 됨
+
+
+
+- 이전에 AppConfig는 @Bean으로 직접 설정정보를 작성했고, 의존관계도 명시했었다.
+
+<img width="635" alt="스크린샷 2021-09-06 오후 10 20 59" src="https://user-images.githubusercontent.com/15208005/132223741-ef4d0dbd-a7b9-4824-8e76-b9c73355173f.png">
+
+
+
+- 스프링 빈의 기본 이름은 클래스명을 사용하되 맨 앞글자만 소문자로 사용한다.
+  - MemberServiceImpl -> memberServiceImpl
+
+
 
 
 
