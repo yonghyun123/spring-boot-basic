@@ -743,6 +743,52 @@ com.hello -> 프로젝트의 시작 루트, 여기에 AppConfig같은 메인정�
 
 
 
+## 옵션 처리
+
+@Autowired 만 사용하면 required 기본값이 true이기에 영향이 없는 자바빈은 에러가 난다
+
+
+
+```java
+package hello.core.autowired;
+
+public class AutowiredTest {
+
+    @Test
+    void autowiredOption(){
+
+        ApplicationContext ac = new AnnotationConfigApplicationContext(testBean.class);
+
+
+    }
+
+    static class testBean{
+
+        @Autowired(required = true)
+        public void setNoBean1(Member noBean1) {
+            System.out.println("noBean1 = " + noBean1);
+        }
+
+        @Autowired
+        public void setNoBean2(@Nullable Member noBean1) {
+            System.out.println("noBean1 = " + noBean1);
+        }
+
+        @Autowired
+        public void setNoBean3(Optional<Member> noBean1) {
+            System.out.println("noBean1 = " + noBean1);
+        }
+    }
+}
+
+```
+
+> 첫번째 예제는 에러가 나는 상황
+
+
+
+
+
 
 
 
