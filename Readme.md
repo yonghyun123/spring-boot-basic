@@ -810,6 +810,11 @@ public class AutowiredTest {
 
 
 
+### lombok 설치
+
+- preference에서 plugin에서 lombok 설치
+- preference에서 annotation processors 활성(compiler하위)
+
 
 
 
