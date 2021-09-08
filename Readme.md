@@ -817,5 +817,98 @@ public class AutowiredTest {
 
 
 
+@RequiredArgsConstructor를 이용해 생성자 소스를 대체한다.
+
+
+
+# 중복등록된 케이스 해결
+
+
+
+### @Autowired 필드 명, @Quilifier, @Primary
+
+
+
+조회 대상 빈이 2개 이상일때 해결방법
+
+- @Autowired 필드명 매칭
+- @Qualifier 끼리 매칭
+- @Primary 사용
+
+
+
+```java
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
+```
+
+
+
+```java
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy rateDiscountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = rateDiscountPolicy;
+    }
+```
+
+
+
+필드명이 rateDiscountPolicy이므로 정상주입된다.
+
+`필드명 매칭은 먼저 타입 매칭 시도 후 그 결과에 여러 빈이 있을 때, 추가로 동작하는 기능이다'
+
+> 타입매칭 -> 결과가 2개 이상이면, 필드명, 파라미터명으로 빈 이름 매칭
+
+```java
+@Component
+@Qualifier("fixDiscountPolicy")
+public class FixDisoucntPolicy implements DiscountPolicy{
+  
+}
+
+```
+
+
+
+```java
+@Component
+@Qualifier("mainDiscountPolicy")
+public class RateDiscountPolicy implements DiscountPolicy{
+
+}
+```
+
+
+
+```java
+    public OrderServiceImpl(MemberRepository memberRepository, @Qualifier("mainDiscountPolicy") DiscountPolicy rateDiscountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = rateDiscountPolicy;
+    }
+```
+
+### @Qualifier 정리
+
+- @Qualifer 끼리 매칭
+- 빈 이름 매칭
+
+
+
+### @Primary
+
+- 사용할 구현체에 @Primary 를 붙임
+
+
+
+> 코드에서 자주 사용하는 메인 데이터베이스의 커넥션을 획득하는 스프링 빈이 있고, 코드에서 특별한 기능으로 가끔 사용하는 서브 데이터베이스의 커넥션을 획득하는 스프링 빈이 있다고 생각.
+>
+> 메인 데이터베이스의 커넥션을 획득하는 스프링 빈은 @Primary를 적용해서 조회하는 곳에서  @Qualifier 지정 없이 편리하게 조회하고, 서브 데이터베이스 커넥션 빈을 획득 할 때는 @Qualifier를 지정해서 명시적으로 획득하는 방법으로 사용하면 코드를 깔끔하게 유지할 수 있다.
+>
+> 
+
+
+
 
 
