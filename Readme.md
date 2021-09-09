@@ -916,3 +916,62 @@ public class RateDiscountPolicy implements DiscountPolicy{
 
 
 
+### 조회한 빈이 모두 필요할때, List, Map
+
+의도적으로 해당 타입의 스프링 빈이 다 필요한 경우도 있다.
+
+클라이언트가 할인의 종류(rate,fix)를 선택할 수 있다고 가정해보자. 스프링을 사용하면 소위 말하는 전략 패턴을 간단하게 구현할 수 있다.
+
+
+
+매우중요!!!!!
+
+```java
+public class AllBeanTest {
+    @Test
+    void findAllbean(){
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AutoAppConfig.class,DiscountService.class);
+        DiscountService discountService = ac.getBean(DiscountService.class);
+        Member member = new Member(1L, "userA", Grade.VIP);
+        int discountPrice = discountService.discount(member, 10000, "fixDiscountPolicy");
+
+        Assertions.assertThat(discountPrice).isEqualTo(1000);
+        int discountPrice2 = discountService.discount(member, 20000, "rateDiscountPolicy");
+        Assertions.assertThat(discountPrice2).isEqualTo(2000);
+
+
+
+    }
+
+    static class DiscountService {
+        private final Map<String, DiscountPolicy> policyMap;
+        private final List<DiscountPolicy> policyList;
+
+        public DiscountService(Map<String, DiscountPolicy> policyMap, List<DiscountPolicy> policyList) {
+            this.policyMap = policyMap;
+            this.policyList = policyList;
+            System.out.println("policyMap = " + policyMap);
+            System.out.println("policyList = " + policyList);
+        }
+
+
+        public int discount(Member member, int price, String discountCode) {
+            DiscountPolicy discountPolicy = policyMap.get(discountCode);
+
+            return discountPolicy.discount(member, price);
+        }
+    }
+}
+```
+
+"분석"
+
+- DiscountService는 Map으로 만든 DiscountPolicy를 주입받음. 이때 fixDiscountPolicy, rateDiscountPolicy가 주입됨
+- discount메서드의 로직이 중요!(전략 패턴)
+
+
+
+
+
+
+

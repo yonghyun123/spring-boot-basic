@@ -1,6 +1,6 @@
 package hello.core.order;
 
-import hello.core.discount.FixDisoucntPolicy;
+import hello.core.discount.FixDiscountPolicy;
 import hello.core.member.Grade;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
@@ -12,7 +12,7 @@ public class OrderServiceImplTest {
 
     @Test
     void createOrder(){
-        OrderServiceImpl orderService = new OrderServiceImpl(new MemoryMemberRepository(), new FixDisoucntPolicy());
+        OrderServiceImpl orderService = new OrderServiceImpl(new MemoryMemberRepository(), new FixDiscountPolicy());
         MemberRepository memberRepository = new MemoryMemberRepository();
         memberRepository.save(new Member(1L, "memberA", Grade.VIP));
 

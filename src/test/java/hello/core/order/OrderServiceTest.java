@@ -1,7 +1,6 @@
 package hello.core.order;
 
 import hello.core.AppConfig;
-import hello.core.discount.FixDisoucntPolicy;
 import hello.core.member.*;
 
 import org.assertj.core.api.Assertions;
