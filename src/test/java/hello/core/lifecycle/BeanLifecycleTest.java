@@ -12,7 +12,7 @@ public class BeanLifecycleTest {
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(LifeCycleConfig.class);
         NetworkClient bean = ac.getBean(NetworkClient.class);
         ac.close();
-        
+
     }
 
     @Configuration
