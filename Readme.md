@@ -1106,7 +1106,23 @@ public class AllBeanTest {
 
 
 
+### 프로토타입 스코프 - 싱글톤 빈과 함께 사용시 문제점
 
+하지만 싱글톤 빈과 함께 사용할 때는 의도한대로 잘 동작하지 않음으로 주위해야 한다.
+
+
+
+<img width="515" alt="스크린샷 2021-09-18 오후 6 19 13" src="https://user-images.githubusercontent.com/15208005/133883913-76bf62c5-5ab3-410a-ba83-292f1c2ed791.png">
+
+
+
+"상황"
+
+- cilentBean 객체는 싱글톤 생성 내부에 PrototypeBean을 인스턴스변수로 저장 
+- 클라이언트 A가 logic이라는 메서드 호출(addCount로직이 포함되어 있음) 1을 반환
+- 클라이언트 B가 logic 호출 -> 1의 반환값으 예상하지만 2를 반환
+- "중요한점은 "clientBean"내부에 가지고 있는 prototypeBean은 이미 과거에 주입이 끝난 빈이다. 주입 시점에 스프링 컨테이너에게 요청해서 프로토타입 빈이 새로 생성된 것이지, 사용할 때마다 새로 생성되는 것이 아니다.!"
+- 
 
 
 

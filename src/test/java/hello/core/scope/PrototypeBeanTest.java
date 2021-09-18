@@ -22,7 +22,7 @@ public class PrototypeBeanTest {
 
         Assertions.assertThat(prototypeBean1).isNotSameAs(prototypeBean2);
         ac.close();// destroy 호출되지 않음.
-        
+
     }
 
     @Scope("prototype")
