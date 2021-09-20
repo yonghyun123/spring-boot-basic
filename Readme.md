@@ -1186,9 +1186,60 @@ ObjectProvider 핵심 컨셉은 스프링컨테이너가 하는 DI기능에서 D
 - 웹 스코프는 웹 환경에서 동작
 - 웹 스코프는 프토토타입과 다르게 스프링이 해당 스코프의 종료시점까지 관리한다.
 
+<img width="405" alt="스크린샷 2021-09-20 오후 5 54 37" src="https://user-images.githubusercontent.com/15208005/133977969-68b9d259-7923-43ad-af8c-a95185990782.png">
 
+
+
+> 만약 기본 포트인 8080포트를 다른곳에서 사용중이어서 오류가 발생하면 포트를 변경해야 한다. 
+>
+> main/resources/application.properties
+>
+> ```
+> server.port=9090
+> ```
+>
+> 
 
  
+
+```java
+
+@Component
+@Scope(value = "request")
+public class MyLogger {
+    private String uuid;
+    private String requestURL;
+
+    public void setRequestURL(String requestURL) {
+        this.requestURL = requestURL;
+    }
+
+
+    public void log(String message){
+        System.out.println("[" + uuid + "]" + "[" + requestURL + "]" + message);
+    }
+
+    @PostConstruct
+    public void init(){
+        uuid = UUID.randomUUID().toString();
+        System.out.println("[" + uuid + "]" + "request scope been create:" + this);
+
+    }
+
+    @PreDestroy
+    public void close(){
+        System.out.println("[" + uuid + "]" + "request scope been close:" + this);
+    }
+}
+```
+
+- 로그를 출력하기 위한 MyLogger 클래스이다.
+- @Scope(value = "request")를 사용해서 서  request 스코프를 지정한다. 이게 빈은 HTTP 요청 당 하나씩 생성되고, HTTP요청이 끝나는 시점에 소멸한다.
+- 이 빈이 생성되는 시점에 자동으로 @PostConstruct 초기화 메서드를 사용해서 uuid를 생성해 저장한다. 이 빈은 HTTP요청 당 하나씩 생성되므로, uuid를 저장해두면 다른 HTTP요청과 구분할 수 있다.
+- 이 빈이 소멸되는 시점에 @PreDestroy를 사용해서 종료 메시지를 남긴다.
+- 'requestURL'은 이 빈이 생성되는 시점에는 알 수 없으므로, 외부에서 setter로 입력받는다.
+
+
 
 
 
