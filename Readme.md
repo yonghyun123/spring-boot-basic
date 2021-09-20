@@ -1241,5 +1241,17 @@ public class MyLogger {
 
 
 
+> 문제: 스프링컨테이너가 동작할때, MyLogger 클래스 빈을 찾고 생성하게 되는데 scope("request")와 충돌이 나게 된다.
+>
+> scope실행 시점이 맞지 않아서 충돌하는 에러
+>
+> 해결하는 방법은 Provider를 이용해야함.
+
+
+
+!!! 중요한것은!!!
+
+ObjectProvider가 scope("request") 객체가 빈의 생성시점을 지연시켰다(스프링 컨테이너에 뜨기전까지)
+
 
 
