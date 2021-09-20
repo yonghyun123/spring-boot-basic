@@ -1122,7 +1122,62 @@ public class AllBeanTest {
 - 클라이언트 A가 logic이라는 메서드 호출(addCount로직이 포함되어 있음) 1을 반환
 - 클라이언트 B가 logic 호출 -> 1의 반환값으 예상하지만 2를 반환
 - "중요한점은 "clientBean"내부에 가지고 있는 prototypeBean은 이미 과거에 주입이 끝난 빈이다. 주입 시점에 스프링 컨테이너에게 요청해서 프로토타입 빈이 새로 생성된 것이지, 사용할 때마다 새로 생성되는 것이 아니다.!"
-- 
+
+
+
+### 프로토타입 스코프 - ObjectFactory, ObjectProvider
+
+```java
+ @RequiredArgsConstructor
+    static class ClientBean{
+//        private final PrototypeBean prototypeBean; //생성시점에 주입
+        private final ObjectProvider<PrototypeBean> prototypeBeanProvider;
+
+
+        public int logic(){
+            PrototypeBean prototypeBean = prototypeBeanProvider.getObject();
+            prototypeBean.addCount();
+            return prototypeBean.getCount();
+
+        }
+    }
+```
+
+실행하면 getObject()을 통해서 항상 새로운 프로토타입 빈이 생성되는 것을 확인할 수 있다.
+
+ObjectProvider 핵심 컨셉은 스프링컨테이너가 하는 DI기능에서 DL(dependency Lookup)기능으로 조회하는 기능을 대신하는 정도하는 것이다.
+
+
+
+### JSR-330 Provier
+
+```java
+    @RequiredArgsConstructor
+    static class ClientBean{
+//        private final PrototypeBean prototypeBean; //생성시점에 주입
+        private final Provider<PrototypeBean> prototypeBeanProvider;
+
+
+        public int logic(){
+            PrototypeBean prototypeBean = prototypeBeanProvider.get();
+            prototypeBean.addCount();
+            return prototypeBean.getCount();
+
+        }
+    }
+
+```
+
+- 실행해보면 provider.get()을 통해서 항상 새로운 프로토타입 빈이 생성되는 것을 확인할 수 있다.
+- provider의 get()을 호출하면 내부에서는 스프링 컨테이너를 통해 해당 빈을 찾아서 반환한다('DL')
+- 자바 표준이고, 기능이 단순하므로 단위테스트를 만들거나  mock코드를 만들기 편하다.
+- 'Provider'는 지금의 DL정도의 기능만 제공한다.
+
+
+
+
+
+ 
 
 
 
