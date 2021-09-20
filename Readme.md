@@ -1255,3 +1255,33 @@ ObjectProvider가 scope("request") 객체가 빈의 생성시점을 지연시켰
 
 
 
+### 스코프와 프록시
+
+```java
+@Component
+@Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class MyLogger {
+    private String uuid;
+    private String requestURL;
+}
+```
+
+- proxyMode = ScopedProxyMode.TARGET_CLASS 를 추가
+- 적용 대상이 인터페이스가 아니면 TARGET_CLASS선택
+- 적용 대상이 인터페이스면 INTERFACE 선택
+
+
+
+> "CGLIB"라는 라이브러리로 내 클래스를 상속 받은 가짜 프록시 객체를 만들어서 주입
+>
+> - @Scope의 proxyMode = ScopedProxyMode.TARGET_CLASS를 설정하면 스프링 컨테이너는 CGLIB이라는 바이트 코드를 조작하는 라이브러를 사용해서 MyLogger를 상속받은 가짜 프록시 객체를 생성한다.
+> - 그리고 스프링 컨테이너에 "myLogger"라는 이름으로 가짜 프록시 객체를 등록한다.
+
+
+
+"동작 원리"
+
+- CGLIB이라는 라이브러리로 내 클래스를 상속 받은 프록시 객체를 만들어서 주입
+- 가짜 프록시 객체는 실제 요청이 오면 그때 내부에서 실제 빈을 요청하는 위임하는 로직이 들어있음
+- 가짜 프록시 객체는  실제 request scope과 관계가 없다. 그냥 가짜이고, 단순한 위임 로직만 있고, 싱글톤처럼 동작한다.
+
